@@ -165,7 +165,7 @@ The XAML can take advantage of binding to the hashtable created by the data sour
 
 This produces a widget that looks like this.
 
-![](/images/widget1.png.png)
+![](/images/widget1.png)
 
 ### Desktop Widgets
 
