@@ -79,7 +79,6 @@
         'Start-Commander',
         'Install-Commander',
         'Uninstall-Commander',
-        'Install-CommanderLicense'
         'Register-CommanderEvent'
         'Stop-Commander'
         'Set-CommanderSetting'

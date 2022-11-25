@@ -467,41 +467,6 @@ function Uninstall-Commander {
     Remove-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name 'PSCommander'
 }
 
-function Install-CommanderLicense {
-    <#
-    .SYNOPSIS
-    Installs a PowerShell Pro Tools license to use with PSCommander.
-    
-    .DESCRIPTION
-    Installs a PowerShell Pro Tools license to use with PSCommander. You will need to restart PSCommander after installing the license.
-    
-    .PARAMETER Path
-    The path to the PowerShell Pro Tools license. 
-    
-    .EXAMPLE
-    Install-CommanderLicense -Path .\license.txt 
-    
-    Installs the PSCommander license. 
-    #>
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    if (-not (Test-Path $Path)) {
-        throw "File not found"
-    }
-
-    $Content = Get-Content $Path -Raw
-    $Folder = Join-Path $env:appdata "PowerShell Pro Tools"
-    if (-not (Test-Path $Folder)) {
-        New-Item -Path $Folder -ItemType 'Directory'
-    }
-
-    $Content | Out-File (Join-Path $Folder "license.lic")
-}
-
 function Register-CommanderEvent {
     <#
     .SYNOPSIS
