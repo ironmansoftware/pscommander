@@ -421,14 +421,30 @@ function Start-Commander {
         $ConfigPath = [IO.Path]::Combine($Documents, 'PSCommander', 'config.ps1')
     }
 
+    $ConfigDirectory = Split-Path -Path $ConfigPath -Parent
+    $DefaultConfiguration = @"
+New-CommanderToolbarIcon -MenuItem @(
+    New-CommanderMenuItem -Text 'Documentation' -Action {
+        Start-Process 'https://docs.poshtools.com/powershell-pro-tools-documentation/pscommander'
+    }
+)
+"@
+
+    $OpenConfigEditor = $false
+
     if (-not (Test-Path $ConfigPath)) {
         Write-Warning "Configuration file for PSCommander not found. Creating config file..."
-        New-Item -Path (Join-Path $Documents 'PSCommander') -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
-        "New-CommanderToolbarIcon -MenuItem @( 
-    New-CommanderMenuItem -Text 'Documentation' -Action { 
-        Start-Process 'https://docs.poshtools.com/powershell-pro-tools-documentation/pscommander' 
-    } 
-)" | Out-File $ConfigPath 
+        New-Item -Path $ConfigDirectory -ItemType Directory -Force | Out-Null
+        Set-Content -Path $ConfigPath -Value $DefaultConfiguration -Encoding UTF8
+        $OpenConfigEditor = $true
+    }
+    elseif ((Get-Item -Path $ConfigPath).Length -eq 0) {
+        Write-Warning "Configuration file for PSCommander is empty. Adding starter configuration..."
+        Set-Content -Path $ConfigPath -Value $DefaultConfiguration -Encoding UTF8
+        $OpenConfigEditor = $true
+    }
+
+    if ($OpenConfigEditor) {
         Start-Process -FilePath "$PSScriptRoot\psscriptpad.exe" -ArgumentList @("-c `"$ConfigPath`"")
     }
 
