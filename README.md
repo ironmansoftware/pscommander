@@ -28,16 +28,15 @@ Install-Commander
 
 ## Configuration
 
-PSCommander is configured using a single PS1 file. This file is stored within your documents folder. To create a new config file, you can use the following command.
+PSCommander is configured using a single PS1 file. This file is stored within your documents folder at `Documents\PSCommander\config.ps1`. To create the file with a starter configuration and open it in the editor, run:
 
 ```powershell
-$Documents = [Environment]::GetFolderPath('MyDocuments')
-$Commander = Join-Path $Documents 'PSCommander'
-New-Item $Commander -ItemType Directory 
-New-Item (Join-Path $Commander 'config.ps1')
+Start-Commander
 ```
 
-PSCommander will use this configuration file to load settings. Any changes to the file will result in PSCommander reconfiguring itself. If you don't have PSCommander running yet, you can use `Start-Commander`.
+PSCommander will use this configuration file to load settings. Add commands such as `New-CommanderSchedule`, `New-CommanderHotKey`, or `New-CommanderToolbarIcon` directly to `config.ps1`. Running those commands in a regular PowerShell session returns configuration objects for that session; it does not automatically save them to `config.ps1`.
+
+If you create an empty `config.ps1` manually, `Start-Commander` will add a starter toolbar icon configuration the first time it sees the empty file. Any changes to the file will result in PSCommander reconfiguring itself. If you don't have PSCommander running yet, you can use `Start-Commander`.
 
 ```powershell
 Start-Commander 
