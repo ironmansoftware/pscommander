@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="pscommander.models/pscommander.models.csproj" />
+  <Project Path="pscommander/pscommander.csproj" />
+</Solution>
