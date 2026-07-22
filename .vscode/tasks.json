@@ -6,8 +6,8 @@
             "command": "dotnet",
             "type": "process",
             "args": [
-                "publish",
-                "./pscommander.csproj",
+                "build",
+                "${workspaceFolder}/pscommander/pscommander.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -22,7 +22,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "./pscommander.csproj",
+                "${workspaceFolder}/pscommander/pscommander.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -37,14 +37,15 @@
             "type": "process",
             "args": [
                 "watch",
+                "--project",
+                "${workspaceFolder}/pscommander/pscommander.csproj",
                 "run",
-                "./pscommander.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/pscommander"
+                "cwd": "${workspaceFolder}"
             }
         }
     ]

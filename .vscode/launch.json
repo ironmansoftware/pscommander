@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": ".NET Launch PSCommander",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/pscommander/bin/Debug/net6.0-windows/win10-x64/publish/pscommander.dll",
+            "program": "${workspaceFolder}/pscommander/bin/Debug/net10.0-windows/pscommander.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
