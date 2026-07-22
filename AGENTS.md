@@ -8,7 +8,7 @@ PSCommander is a Windows desktop automation tool distributed as a PowerShell mod
 
 The solution has two projects:
 
-- `pscommander\pscommander.csproj`: .NET 6 Windows WPF executable and bundled `PSCommander.psm1` / `PSCommander.psd1` module files.
+- `pscommander\pscommander.csproj`: .NET 10 Windows WPF executable and bundled `PSCommander.psm1` / `PSCommander.psd1` module files.
 - `pscommander.models\pscommander.models.csproj`: `netstandard2.0` shared model types returned from the PowerShell module and consumed by the WPF app.
 
 ## Important files and directories
@@ -20,7 +20,7 @@ The solution has two projects:
 - `pscommander\MainWindow.xaml.cs`: composition root. Instantiates services, initializes the PowerShell runspace, loads config, starts event providers, and performs update checks.
 - `pscommander\Services\`: Windows integration, PowerShell runspace, persistence, tray menu, widgets, jobs, named pipes, and configuration reload services.
 - `pscommander.models\`: public model classes and enums used by both PowerShell functions and app services.
-- `.github\workflows\ci.yml`: CI publishes the solution on `windows-latest` with .NET 6.
+- `.github\workflows\ci.yml`: CI publishes the solution on `windows-latest` with .NET 10.
 - `.github\workflows\production.yml`: manual release workflow publishes the module.
 
 ## Build and validation
