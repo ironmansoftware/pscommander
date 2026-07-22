@@ -13,7 +13,7 @@ The solution has two projects:
 
 ## Important files and directories
 
-- `PSCommander.sln`: solution entry point.
+- `PSCommander.slnx`: solution entry point.
 - `pscommander\PSCommander.psm1`: public PowerShell cmdlet functions such as `New-CommanderHotKey`, `New-CommanderSchedule`, `Start-Commander`, and `Register-CommanderDataSource`.
 - `pscommander\PSCommander.psd1`: PowerShell module manifest.
 - `pscommander\App.xaml.cs`: command-line argument parsing. Secondary invocations forward file association, shortcut, context menu, and protocol commands over named pipes.
@@ -28,7 +28,7 @@ The solution has two projects:
 Run commands from the repository root unless noted.
 
 ```powershell
-dotnet restore .\PSCommander.sln
+dotnet restore .\PSCommander.slnx
 dotnet publish
 ```
 
@@ -41,7 +41,7 @@ dotnet publish .\pscommander\pscommander.csproj
 dotnet build .\pscommander.models\pscommander.models.csproj
 ```
 
-This is a Windows-only WPF app (`net6.0-windows`, `UseWPF`, `UseWindowsForms`). Do not assume Linux/macOS validation will work.
+This is a Windows-only WPF app (`net10.0-windows`, `UseWPF`, `UseWindowsForms`). Do not assume Linux/macOS validation will work.
 
 ## Runtime behavior to preserve
 
