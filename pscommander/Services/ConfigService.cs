@@ -89,6 +89,7 @@ namespace pscommander
             var configPath = Path.Combine(GetFolder(), "config.ps1");
             if (!File.Exists(configPath))
             {
+                _menuService.UpdateToolbar(Configuration.ToolbarIcon);
                 return;
             }
 
