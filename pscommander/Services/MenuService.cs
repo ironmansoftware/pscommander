@@ -1,13 +1,12 @@
 using System.Windows.Controls;
 using WPFMenuItem = System.Windows.Controls.MenuItem;
 using Hardcodet.Wpf.TaskbarNotification;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System;
 using System.Management.Automation;
 using System.IO;
 using System.Reflection;
 using System.Drawing;
+using System.Windows;
 
 namespace pscommander
 {
@@ -42,7 +41,7 @@ namespace pscommander
 
                 if (string.IsNullOrWhiteSpace(icon.Icon))
                 {
-                    _taskbarIcon.IconSource = new BitmapImage(new Uri("pack://application:,,,/pscommander;component/Resources/icon.ico"));
+                    _taskbarIcon.Icon = LoadDefaultIcon();
                 }
                 else 
                 {
@@ -98,6 +97,18 @@ namespace pscommander
                 };
                 _taskbarIcon.MenuActivation = PopupActivationMode.RightClick;
             });
+        }
+
+        private static Icon LoadDefaultIcon()
+        {
+            var resourceInfo = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/icon.ico"));
+            if (resourceInfo == null)
+            {
+                throw new FileNotFoundException("The default tray icon resource could not be found.", "Resources/icon.ico");
+            }
+
+            using var icon = new Icon(resourceInfo.Stream);
+            return (Icon)icon.Clone();
         }
 
         private void AddMenuItem(ItemCollection items, MenuItem item)
