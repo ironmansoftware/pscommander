@@ -12,7 +12,7 @@
     RootModule         = 'PSCommander.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '2022.11.0'
+    ModuleVersion      = '2026.1.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
