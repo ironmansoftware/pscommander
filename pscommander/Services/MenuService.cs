@@ -4,7 +4,6 @@ using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Management.Automation;
 using System.IO;
-using System.Reflection;
 using System.Drawing;
 using System.Windows;
 
@@ -25,9 +24,6 @@ namespace pscommander
 
         public void UpdateToolbar(ToolbarIcon icon)
         {
-            var assemblyLocation = Assembly.GetEntryAssembly().Location;
-            var fileInfo = new FileInfo(assemblyLocation);
-
             _taskbarIcon.Dispatcher.Invoke(() => {
 
                 if (string.IsNullOrEmpty(icon.Text))
@@ -83,7 +79,7 @@ namespace pscommander
 
                         AddMenuItem(_taskbarIcon.ContextMenu.Items, new MenuItem {
                             Text = "Edit Config",
-                            Action = ScriptBlock.Create($". '{Path.Combine(fileInfo.DirectoryName, "PSScriptPad.exe")}' -c '{path}'")
+                            Action = CreateEditConfigAction(path)
                         });
                     }
 
@@ -99,6 +95,29 @@ namespace pscommander
             });
         }
 
+        private static ScriptBlock CreateEditConfigAction(string path)
+        {
+            var escapedPath = EscapePowerShellSingleQuotedString(path);
+            var script = $@"
+$configPath = '{escapedPath}'
+$code = Get-Command -Name code.cmd, code.exe, code -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+
+if ($code) {{
+    Start-Process -FilePath $code.Source -ArgumentList @('-n', $configPath)
+}}
+else {{
+    Start-Process -FilePath notepad.exe -ArgumentList @($configPath)
+}}
+";
+
+            return ScriptBlock.Create(script);
+        }
+
+        private static string EscapePowerShellSingleQuotedString(string value)
+        {
+            return value.Replace("'", "''");
+        }
+
         private static Icon LoadDefaultIcon()
         {
             var resourceInfo = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/icon.ico"));
@@ -106,7 +125,6 @@ namespace pscommander
             {
                 throw new FileNotFoundException("The default tray icon resource could not be found.", "Resources/icon.ico");
             }
-
             using var icon = new Icon(resourceInfo.Stream);
             return (Icon)icon.Clone();
         }
