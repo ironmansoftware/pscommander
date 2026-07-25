@@ -26,6 +26,32 @@ Once you have the module installed, you can cause PSCommander to run at logon by
 Install-Commander
 ```
 
+## Uninstallation
+
+To completely remove PSCommander, first remove its configuration while PSCommander is still running. This lets it unregister the shortcuts, file associations, Explorer context-menu entries, and custom protocols that it manages. Back up the configuration before replacing it with an empty configuration, then wait a few seconds for the configuration reload to finish.
+
+```powershell
+$configPath = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'PSCommander\config.ps1'
+Copy-Item -LiteralPath $configPath -Destination "$configPath.bak" -Force
+Set-Content -LiteralPath $configPath -Value '# PSCommander configuration removed'
+Start-Sleep -Seconds 2
+```
+
+If PSCommander is not running, run `Start-Commander` first and wait for it to start before clearing the configuration. Then disable its logon startup entry, stop the running process, and remove every installed version of the module:
+
+```powershell
+Uninstall-Commander -ErrorAction SilentlyContinue
+Stop-Commander -ErrorAction SilentlyContinue
+Uninstall-Module PSCommander -AllVersions
+```
+
+Finally, remove the saved configuration and local database. This permanently deletes the backup created above and any PSCommander settings or registration data.
+
+```powershell
+Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'PSCommander') -Recurse -Force
+Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'PSCommander') -Recurse -Force
+```
+
 ## Configuration
 
 PSCommander is configured using a single PS1 file. This file is stored within your documents folder at `Documents\PSCommander\config.ps1`. To create the file with a starter configuration and open it in the editor, run:
